@@ -1,10 +1,11 @@
 version: "3.0"
 
 services:
-  main:
-    container_name: main
+  backend:
+    container_name: back_freelance
     build:
-      context: .
+      dockerfile: Dockerfile
+      context: ./apps/backend
     env_file:
       - .development.env
     volumes:
@@ -17,6 +18,16 @@ services:
     depends_on:
       - postgres
     restart: always
+  frontend:
+    container_name: front-freelance
+    build:
+      dockerfile: Dockerfile
+      context: ./apps/frontend
+    env_file:
+      - .development.env
+    volumes:
+      - /app/node_modules
+      - ./client:/app
   postgres:
     container_name: postgres
     image: postgres:12

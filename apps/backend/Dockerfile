@@ -1,13 +1,15 @@
-FROM node:12.13-alpine
+FROM alpine:3.15
+
+RUN apk add --update nodejs npm
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN npm install
+COPY package-lock.json ./
 
-COPY . .
+COPY ./ ./
 
-COPY ./dist ./dist
+RUN npm i
 
 CMD ['npm', 'run', 'start:dev']
